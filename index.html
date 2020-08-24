@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="style.css"/>
+        <title>bokunokaowa</title>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f3abe3d2de7a5bf"></script>
+
+    </head>
+    <body>
+        <div id="loading">
+            <div style="font-size: 30px;">
+                <br><br><br><br><br>
+                <i class="fas fa-spinner fa-spin"></i>
+                <h4>loading...</h4>
+            </div>
+        </div>
+        <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">내 얼굴형은?</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <br>
+            <div class="text-center">
+                <h2 id="site-title">조미료 얼굴형을 찾아보자!</h2>
+                <br>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-outline-primary active">
+                        <input type="radio" name="options" id="option1" value="1" autocomplete="off" checked onchange="changeSex(this)"> 男性
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="options" id="option2" value="2" autocomplete="off"onchange="changeSex(this)"> 女性
+                    </label>
+                </div>
+            </div>
+            <br>
+            <div class="text-center">
+                <h6>위의 버튼으로 성별을 선택해 주세요.</h6>
+                <hr>
+                <h6>아래의 버튼을 클릭 후 가능한 정면이 나온 사진을 선택, 촬영해 주세요.</h6>
+                <hr>
+                <h6> 게제하신 사진은 절대 서버에 저장되지 않습니다.</h6>
+            </div>
+            <div class="file-upload">
+                <button type="button" class="btn btn-outline-primary btn-lg btn-block" onclick="$('.file-upload-input').trigger( 'click' )">click!</button>
+                <div class="image-upload-wrap">
+                    <input class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*"/>
+                    <div class="drag-img" id="area">
+                        <img src="https://img.icons8.com/ios/50/000000/face.png"/>
+                        <h3>사진을 드래그 해 넣어주세요.</h3>
+                    </div>
+                </div>
+                <div class="file-upload-content">
+                    <img class="file-upload-image" id="face-image" src="#" alt="your image" />
+                    <h4 id="resultMessage"></h4>
+                    <div class="image-title-wrap">
+                        <div class="text-center">
+                            <div class="card" style="width: 18rem; display:inline-block;">
+                                <div class="card-header" style="background: #6324BD; color: white;">
+                                    랭킹
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <table style="width: 100%;">
+                                            <colgroup>
+                                                <col width="10%">
+                                                <col width="80%">
+                                                <col width="10%">
+                                            </colgroup>
+                                            <tr>
+                                                <td>1</td>
+                                                <td id="first-title"></td>
+                                                <td id="first-num"></td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                    <li class="list-group-item" id="second">
+                                        <table style="width: 100%;">
+                                            <colgroup>
+                                                <col width="10%">
+                                                <col width="80%">
+                                                <col width="10%">
+                                            </colgroup>
+                                            <tr>
+                                                <td>2</td>
+                                                <td id="second-title"></td>
+                                                <td id="second-num"></td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                    <li class="list-group-item" id="third">
+                                        <table style="width: 100%;">
+                                            <colgroup>
+                                                <col width="10%">
+                                                <col width="80%">
+                                                <col width="10%">
+                                            </colgroup>
+                                            <tr>
+                                                <td>3</td>
+                                                <td id="third-title"></td>
+                                                <td id="third-num"></td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br>
+                        <button type="button" onclick="removeUpload()" class="remove-image">
+                            Remove <br><span class="image-title">Uploaded Image</span>
+                        </button>
+                    </div>
+                </div>
+                <br>
+                <div class="icon_array">
+                    <div class="addthis_inline_share_toolbox"></div>
+                </div>
+            </div>
+            <div id="disqus_thread"></div>
+            <script>
+
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://bokunokaowa.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+        <script type="text/javascript">
+        $(window).load(function() {
+            $('#loading').hide();
+          });
+
+
+        // More API functions here:
+        // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+        // the link to your model provided by Teachable Machine export panel
+        const URL = "https://teachablemachine.withgoogle.com/models/77oMqmY0q/";
+
+        let model, webcam, labelContainer, maxPredictions;
+
+        // Load the image model and setup the webcam
+        async function init() {
+            $('#loading').show();
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+
+            // load the model and metadata
+            // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+            // or files from your local hard drive
+            // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+        }
+        // run the webcam image through the image model
+        async function predict() {
+            // predict can take in an image, video or canvas html element
+            var image = document.getElementById('face-image');
+            const prediction = await model.predict(image, false);
+            prediction.sort((a,b) => parseFloat(b.probability) - parseFloat(a.probability));
+            var resultMessage;
+            switch (prediction[0].className) {
+                case 'sio':
+                    resultMessage = "소금형 얼굴"
+                    break;
+                case 'sosu':
+                    resultMessage = "소스형 얼굴"
+                    break;
+                case 'sato':
+                    resultMessage = "설탕형 얼굴"
+                    break;
+                case 'sake':
+                    resultMessage = "식초형 얼굴"
+                    break;
+                case 'mayo':
+                    resultMessage = "마요네즈형 얼굴"
+                    break;
+                case 'kecyapu':
+                    resultMessage = "케챱형 얼굴"
+                    break;
+                case 'syoyu':
+                    resultMessage = "간장형 얼굴"
+                    break;
+                default:
+                    resultMessage = "얼굴이 인식되지 않습니다."
+                break;
+            }
+            document.getElementById('resultMessage').innerHTML = '당신은 '+resultMessage;
+            for (let i = 0; i < 3; i++) {
+                console.log(prediction)
+                let resultNum = Math.floor(prediction[i].probability*100);
+                let title = changeTitle(prediction[i].className);
+                console.log(title);
+                console.log(resultNum);
+                console.log(prediction[i]);
+                if (i==0) {
+                    document.getElementById('first-title').innerHTML = title;
+                    document.getElementById('first-num').innerHTML = resultNum+"%";
+                }else if (i==1) {
+                    document.getElementById('second-title').innerHTML = title;
+                    document.getElementById('second-num').innerHTML = resultNum+"%";
+                }else if (i==2) {
+                    document.getElementById('third-title').innerHTML = title;
+                    document.getElementById('third-num').innerHTML = resultNum+"%";
+                }
+                console.log(document.getElementById('third-title').childNodes);
+                console.log(document.getElementById('first-title').childNodes);
+            }
+            $('#loading').hide();
+        }
+        function changeTitle(title) {
+
+            if (title == "kecyapu") {
+                return "케챱";
+            }else if (title == "sosu") {
+                return "소스";
+            }else if (title == "sio") {
+                return "소금";
+            }else if (title == "syoyu") {
+                return "간장";
+            }else if (title == "sato") {
+                return "설탕";
+            }else if (title == "sake") {
+                return "식초"
+            }else if (title == "mayo") {
+                return "마요네즈"
+            }
+        }
+        //input radio change sex start
+        function changeSex(obj) {
+            let title = document.getElementById('site-title');
+            if(obj.value==2){
+                title.innerHTML = "";
+                title.innerHTML = "동물 얼굴형을 찾아보자!";
+            }else if(obj.value==1){
+                title.innerHTML = "";
+                title.innerHTML = "조미료 얼굴형을 찾아보자!";
+            }
+        }
+        //change sex end
+        //image upload start
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('.image-upload-wrap').hide();
+
+                        $('.file-upload-image').attr('src', e.target.result);
+                        $('.file-upload-content').show();
+
+                        $('.image-title').html(input.files[0].name);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                    let male = document.getElementById('option1');
+                    let femail = document.getElementById('option2');
+                    if (document.getElementById('option1').checked) {
+                        init().then(()=>{
+                            predict();
+                        });
+                    }else if (document.getElementById('option2').checked) {
+                        init2().then(()=>{
+                            predict2();
+                        });
+                    }
+                } else {
+                    removeUpload();
+                }
+            }
+            function removeUpload() {
+                $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+                $('.file-upload-content').hide();
+                $('.image-upload-wrap').show();
+            }
+            $('.image-upload-wrap').bind('dragover', function () {
+                $('.image-upload-wrap').addClass('image-dropping');
+            });
+            $('.image-upload-wrap').bind('dragleave', function () {
+                $('.image-upload-wrap').removeClass('image-dropping');
+            });
+            //image upload end
+            // mobile desktop check start
+            let dragAndDropArea = document.getElementById('area');
+            var filter = "win16|win32|win64|mac";
+            if(navigator.platform){
+                if(0 > filter.indexOf(navigator.platform.toLowerCase())){
+                    dragAndDropArea.parentNode.removeChild(dragAndDropArea);
+                }else{
+                    console.log("open in PC")
+                }
+            }
+        </script>
+
+        <script type="text/javascript">
+        const URL2 = "https://teachablemachine.withgoogle.com/models/52dzO_zeu/";
+
+        let model2, labelContainer2, maxPredictions2;
+
+        // Load the image model and setup the webcam
+        async function init2() {
+            $('#loading').show();
+            const modelURL = URL2 + "model.json";
+            const metadataURL = URL2 + "metadata.json";
+
+            // load the model and metadata
+            // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+            // or files from your local hard drive
+            // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+            model2 = await tmImage.load(modelURL, metadataURL);
+            maxPredictions2 = model2.getTotalClasses();
+        }
+        // run the webcam image through the image model
+        async function predict2() {
+            // predict can take in an image, video or canvas html element
+            var image = document.getElementById('face-image');
+            const prediction = await model2.predict(image, false);
+            prediction.sort((a,b) => parseFloat(b.probability) - parseFloat(a.probability));
+            document.getElementById('resultMessage').innerHTML = 'あなたは'+prediction[0].className+"顔";
+            for (let i = 0; i < 3; i++) {
+                console.log(prediction)
+                let resultNum = Math.floor(prediction[i].probability*100);
+                if (i==0) {
+                    document.getElementById('first-title').innerHTML = prediction[i].className;
+                    document.getElementById('first-num').innerHTML = resultNum+"%";
+                }else if (i==1) {
+                    document.getElementById('second-title').innerHTML = prediction[i].className;
+                    document.getElementById('second-num').innerHTML = resultNum+"%";
+                }else if (i==2) {
+                    document.getElementById('third-title').innerHTML = prediction[i].className;
+                    document.getElementById('third-num').innerHTML = resultNum+"%";
+                }
+            }
+            $('#loading').hide();
+        }
+        </script>
+        <script
+            src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+    <!--
+Copyright (c) 2020 by Aaron Vanston (https://codepen.io/aaronvanston/pen/yNYOXR)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+--></html>
